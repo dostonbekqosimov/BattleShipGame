@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Gamehelper {
-    private static final String alphabet = "abcdefg";
+    public static final String alphabet = "abcdefg";
     private int gridLength = 7;
     private int gridSize = 49;
     private int[] grid = new int[gridSize];
     private int comCount = 0;
 
+    // play the game manually
     public String getUserInput(String prompt) {
         String inputLine = null;
         System.out.println(prompt + " ");
@@ -26,6 +27,17 @@ public class Gamehelper {
         }
         return inputLine.toLowerCase();
     }
+
+    // make the game automatic
+//    public String getUserInput(String prompt) {
+//        // Generate random row and column indices
+//        char col = (char) ('a' + (int)(Math.random() * gridLength));
+//        int row = 1 + (int) (Math.random() * gridLength); // Add 1 to start from row 1
+//        String guess = String.valueOf(col) + row;
+//        System.out.println("Computer's guess: " + guess);
+//        return guess;
+//    }
+
 
     public ArrayList<String> placeDotCom(int comSize) {
         ArrayList<String> alphaCells = new ArrayList<String>();
@@ -42,7 +54,7 @@ public class Gamehelper {
             incr = gridLength;
         }
         while (!success & attempts++ < 200) {
-            location = (int) (Math.random() + gridSize -1);
+            location = (int) (Math.random() * gridSize );
             //
             int x = 0;
             success = true;

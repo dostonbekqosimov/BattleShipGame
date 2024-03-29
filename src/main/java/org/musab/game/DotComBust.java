@@ -1,19 +1,23 @@
 package org.musab.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import static org.musab.game.Gamehelper.alphabet;
 
 public class DotComBust {
     private Gamehelper helper = new Gamehelper();
     private ArrayList<DotCom> dotComsList = new ArrayList<DotCom>();
     private int numOfGuesses = 0;
+    private int numOfGuesses1 =0;
 
     private void setUpGame() {
         DotCom one = new DotCom();
         one.setName("Pets.com");
         DotCom two = new DotCom();
-        one.setName("eToys.com");
+        two.setName("eToys.com");
         DotCom three = new DotCom();
-        one.setName("Go2.com");
+        three.setName("Go2.com");
 
         dotComsList.add(one);
         dotComsList.add(two);
@@ -33,6 +37,7 @@ public class DotComBust {
     private void startPlaying() {
         while (!dotComsList.isEmpty()) {
             String userGuess = helper.getUserInput("Enter a guess");
+            numOfGuesses1++;
             checkUserGuess(userGuess);
         }
         finishGame();
@@ -42,21 +47,25 @@ public class DotComBust {
         numOfGuesses++;
         String result = "miss";
 
-        for (DotCom dotComToTest : dotComsList) {
+        Iterator<DotCom> iterator = dotComsList.iterator();
+        while (iterator.hasNext()) {
+            DotCom dotComToTest = iterator.next();
             result = dotComToTest.checkYourself(userGuess);
             if (result.equals("hit")) {
                 break;
             }
             if (result.equals("kill")) {
-                dotComsList.remove(dotComToTest);
+                iterator.remove();
                 break;
             }
         }
         System.out.println(result);
     }
 
+
     private void finishGame() {
         System.out.println("All Dot Coms are dead! Your stock is now worthless.");
+        System.out.println("Total attempts: " + numOfGuesses1);
         if (numOfGuesses <= 18) {
             System.out.println("It only took you " + numOfGuesses + " guesses");
             System.out.println(" You got out before your options sank.");
@@ -70,5 +79,8 @@ public class DotComBust {
         DotComBust game = new DotComBust();
         game.setUpGame();
         game.startPlaying();
+
     }
+
+
 }
